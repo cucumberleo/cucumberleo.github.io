@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>Some Greedy Algorithms | Zjh_canAc</title>
+    <title>Some Greedy Algorithms | Zjh_canAc Tech-Blog</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="description" content="Greedy Algorithms
 
@@ -115,7 +115,7 @@ int main()
     
 
     <meta property="og:url" content="https://cucumberleo.github.io/post/greedy-algorithms/">
-  <meta property="og:site_name" content="Zjh_canAc">
+  <meta property="og:site_name" content="Zjh_canAc Tech-Blog">
   <meta property="og:title" content="Some Greedy Algorithms">
   <meta property="og:description" content="Greedy Algorithms 区间贪心问题（一般按先按左端点或者右端点排序） e.g:区间重复点问题，给定N个区间，然后选尽可能少的点，使得每个区间至少包含一个被选的点 思路：按右端点排序，每层吃线段最右边的端点，遍历过程中如果包含上一次选的点就pass。 #include&lt;bits/stdc&#43;&#43;.h&gt; using namespace std; const int N = 10010; struct node{ int l,r; bool operator&lt;(const node &amp;w){ return r&lt;w.r;//按右端点从小到大排序 } }range[N]; int n; void solve() { cin &gt;&gt; n; for(int i=0;i&lt;n;&#43;&#43;i){ int l,r; cin &gt;&gt; l &gt;&gt; r; range[i] = {l,r}; } int ed = -2e9,cnt = 0; sort(range,range&#43;n); for(int i=0;i&lt;n;&#43;&#43;i){ if(range[i].l&gt;ed) { &#43;&#43;cnt; ed = range[i].r; } } cout &lt;&lt; cnt &lt;&lt;endl; } int main() { solve(); return 0; } Huffman tree e.g:合并果子 合并n堆果子（每次合并两堆，消耗的体力为两堆重量和）求合并消耗的最小体力 本质上是一棵完全二叉树，每一个叶子节点到根节点的权值和为 路径长度*叶节点值 思路： 最小的两个点，深度一定最深，且可以互为兄弟。（小的东西让他累积的多，大的深度小就可以让全局最小） 核心思路就是每次选最小的两堆合并，然后合并成的一大堆果子入小根堆，继续合并 #include&lt;bits/stdc&#43;&#43;.h&gt; using namespace std; void solve() { int n; cin &gt;&gt; n; priority_queue&lt;int,vector&lt;int&gt;,greater&lt;int&gt; &gt;pq; while(n--){ int x; cin &gt;&gt; x; pq.push(x); } int ans = 0; while(pq.size()&gt;1){ int a = pq.top();pq.pop(); int b = pq.top();pq.pop(); ans &#43;= (a&#43;b); pq.push(a&#43;b); } cout &lt;&lt; ans &lt;&lt;endl; } int main() { ios_base::sync_with_stdio(false); cin.tie(0),cout.tie(0); solve(); return 0; } 有关Huffman tree的一些总结：">
   <meta property="og:locale" content="zh_CN">
@@ -148,7 +148,7 @@ int main()
   <div class="flex-l justify-between items-center center">
     <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
       
-        Zjh_canAc
+        Zjh_canAc Tech-Blog
       
     </a>
     <div class="flex-l items-center">
@@ -349,7 +349,7 @@ e.g:合并果子 合并n堆果子（每次合并两堆，消耗的体力为两�
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://cucumberleo.github.io/" >
-    &copy;  Zjh_canAc 2024 
+    &copy;  Zjh_canAc Tech-Blog 2024 
   </a>
     <div><div class="ananke-socials"><a href="https://www.facebook.com/%25!s%28%3cnil%3e%29" target="_blank" rel="noopener"
         class="ananke-social-link link-transition facebook link dib z-999 pt3 pt0-l mr1"
