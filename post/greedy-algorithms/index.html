@@ -128,7 +128,7 @@ int main()
   <meta itemprop="description" content="Greedy Algorithms 区间贪心问题（一般按先按左端点或者右端点排序） e.g:区间重复点问题，给定N个区间，然后选尽可能少的点，使得每个区间至少包含一个被选的点 思路：按右端点排序，每层吃线段最右边的端点，遍历过程中如果包含上一次选的点就pass。 #include&lt;bits/stdc&#43;&#43;.h&gt; using namespace std; const int N = 10010; struct node{ int l,r; bool operator&lt;(const node &amp;w){ return r&lt;w.r;//按右端点从小到大排序 } }range[N]; int n; void solve() { cin &gt;&gt; n; for(int i=0;i&lt;n;&#43;&#43;i){ int l,r; cin &gt;&gt; l &gt;&gt; r; range[i] = {l,r}; } int ed = -2e9,cnt = 0; sort(range,range&#43;n); for(int i=0;i&lt;n;&#43;&#43;i){ if(range[i].l&gt;ed) { &#43;&#43;cnt; ed = range[i].r; } } cout &lt;&lt; cnt &lt;&lt;endl; } int main() { solve(); return 0; } Huffman tree e.g:合并果子 合并n堆果子（每次合并两堆，消耗的体力为两堆重量和）求合并消耗的最小体力 本质上是一棵完全二叉树，每一个叶子节点到根节点的权值和为 路径长度*叶节点值 思路： 最小的两个点，深度一定最深，且可以互为兄弟。（小的东西让他累积的多，大的深度小就可以让全局最小） 核心思路就是每次选最小的两堆合并，然后合并成的一大堆果子入小根堆，继续合并 #include&lt;bits/stdc&#43;&#43;.h&gt; using namespace std; void solve() { int n; cin &gt;&gt; n; priority_queue&lt;int,vector&lt;int&gt;,greater&lt;int&gt; &gt;pq; while(n--){ int x; cin &gt;&gt; x; pq.push(x); } int ans = 0; while(pq.size()&gt;1){ int a = pq.top();pq.pop(); int b = pq.top();pq.pop(); ans &#43;= (a&#43;b); pq.push(a&#43;b); } cout &lt;&lt; ans &lt;&lt;endl; } int main() { ios_base::sync_with_stdio(false); cin.tie(0),cout.tie(0); solve(); return 0; } 有关Huffman tree的一些总结：">
   <meta itemprop="datePublished" content="2024-10-23T10:05:50+08:00">
   <meta itemprop="dateModified" content="2024-10-23T10:05:50+08:00">
-  <meta itemprop="wordCount" content="154">
+  <meta itemprop="wordCount" content="250">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Some Greedy Algorithms">
   <meta name="twitter:description" content="Greedy Algorithms 区间贪心问题（一般按先按左端点或者右端点排序） e.g:区间重复点问题，给定N个区间，然后选尽可能少的点，使得每个区间至少包含一个被选的点 思路：按右端点排序，每层吃线段最右边的端点，遍历过程中如果包含上一次选的点就pass。 #include&lt;bits/stdc&#43;&#43;.h&gt; using namespace std; const int N = 10010; struct node{ int l,r; bool operator&lt;(const node &amp;w){ return r&lt;w.r;//按右端点从小到大排序 } }range[N]; int n; void solve() { cin &gt;&gt; n; for(int i=0;i&lt;n;&#43;&#43;i){ int l,r; cin &gt;&gt; l &gt;&gt; r; range[i] = {l,r}; } int ed = -2e9,cnt = 0; sort(range,range&#43;n); for(int i=0;i&lt;n;&#43;&#43;i){ if(range[i].l&gt;ed) { &#43;&#43;cnt; ed = range[i].r; } } cout &lt;&lt; cnt &lt;&lt;endl; } int main() { solve(); return 0; } Huffman tree e.g:合并果子 合并n堆果子（每次合并两堆，消耗的体力为两堆重量和）求合并消耗的最小体力 本质上是一棵完全二叉树，每一个叶子节点到根节点的权值和为 路径长度*叶节点值 思路： 最小的两个点，深度一定最深，且可以互为兄弟。（小的东西让他累积的多，大的深度小就可以让全局最小） 核心思路就是每次选最小的两堆合并，然后合并成的一大堆果子入小根堆，继续合并 #include&lt;bits/stdc&#43;&#43;.h&gt; using namespace std; void solve() { int n; cin &gt;&gt; n; priority_queue&lt;int,vector&lt;int&gt;,greater&lt;int&gt; &gt;pq; while(n--){ int x; cin &gt;&gt; x; pq.push(x); } int ans = 0; while(pq.size()&gt;1){ int a = pq.top();pq.pop(); int b = pq.top();pq.pop(); ans &#43;= (a&#43;b); pq.push(a&#43;b); } cout &lt;&lt; ans &lt;&lt;endl; } int main() { ios_base::sync_with_stdio(false); cin.tie(0),cout.tie(0); solve(); return 0; } 有关Huffman tree的一些总结：">
@@ -326,6 +326,38 @@ e.g:合并果子 合并n堆果子（每次合并两堆，消耗的体力为两�
 ⑵产生一个新节点，此节点为（1）之移除节点之父节点，而此节点的权重值为（1）两节点之权重和
 ⑶把（2）产生之节点加入优先队列中
 实际应用中可以用来进行数据压缩（出现几率大的（权值高）放在较浅的层，低的则放在深层，则带权路径和最短）</li>
+</ul>
+<p>$Leetcode .910 最小差值II（贪心的好题）$</p>
+<ul>
+<li><a href="https://leetcode.cn/problems/smallest-range-ii/description/?envType=daily-question&amp;envId=2024-10-21">https://leetcode.cn/problems/smallest-range-ii/description/?envType=daily-question&amp;envId=2024-10-21</a>
+<a href="https://imgse.com/i/pAwrytJ"><img src="https://s21.ax1x.com/2024/10/25/pAwrytJ.png" alt="pAwrytJ.png"></a></li>
+<li><strong>思路</strong>
+<ol>
+<li>该贪心满足一定的规律，具有一定的单调性</li>
+<li>一定是从某个点开始全都是加或全都是减k，极端情况：全都加或全都减，则最大和最小差值不变。</li>
+<li>一般情况分为两种：1. 从i这个下标之前全部为-k，从i这个下标之后全是+k。 2. 从i这个下标之前全是+k，从i这个下标之后全是-k
+4.现在考虑case1，此时一眼看出，最小的仍然是0这个下标对应的值 = $ nums[0] - k$,而最大则变为，$nums.back()+ k$ ,则差值恒为$nums.back()-nums[0]+2k$,不减反增；再考虑case2：前面全+k，后面全-k，则最大值的可能情况有两种，本质上变成了断点在 i 的分段函数最大值最小值问题，
+$1. nums[i]-k &lt; nums[i+1]-k &lt; &hellip; &lt; nums.back()-k $
+$ 2. nums[0]+k &lt; nums[1]+k &lt; &hellip; &lt; nums[i-1]+k $
+这俩分段函数最大值可能是$ nums.back() - k 也有可能是 nums[i-1] + k.$
+最小值可能是$ nums[0] + k 也有可能是 nums[i-1] - k $
+所以很轻松能够得到贪心思路，遍历每种可能的i，然后记录当前最大值和最小值，然后更新两者之差的最小值</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> smallestRangeII(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> nums, <span style="color:#66d9ef">int</span> k) {
+</span></span><span style="display:flex;"><span>        sort(nums.begin(),nums.end());
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> nums.size();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> ans <span style="color:#f92672">=</span> nums.back()<span style="color:#f92672">-</span>nums[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;</span>n;<span style="color:#f92672">++</span>i){
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> mx <span style="color:#f92672">=</span> max(nums[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">+</span>k,nums.back()<span style="color:#f92672">-</span>k);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> mn <span style="color:#f92672">=</span> min(nums[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span>k,nums[i]<span style="color:#f92672">-</span>k);
+</span></span><span style="display:flex;"><span>            ans <span style="color:#f92672">=</span> min(ans,mx<span style="color:#f92672">-</span>mn);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ans;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div></li>
 </ul>
 <ul class="pa0">
   
