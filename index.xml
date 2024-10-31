@@ -6,8 +6,15 @@
     <description>Recent content on Zjh_canAc Tech-Blog</description>
     <generator>Hugo</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 23 Oct 2024 10:05:50 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 31 Oct 2024 14:11:44 +0800</lastBuildDate>
     <atom:link href="https://cucumberleo.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Course</title>
+      <link>https://cucumberleo.github.io/post/course/</link>
+      <pubDate>Thu, 31 Oct 2024 14:11:44 +0800</pubDate>
+      <guid>https://cucumberleo.github.io/post/course/</guid>
+      <description>&lt;h1 id=&#34;courses-of-shanghai-universitycs-major&#34;&gt;Courses of Shanghai University(CS Major)&lt;/h1&gt;&#xA;&lt;h3 id=&#34;experiments&#34;&gt;Experiments&lt;/h3&gt;&#xA;&lt;p&gt;Homework Page ：https://github.com/cucumberleo/My-courses-Shanghai-University-&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;数字逻辑实验：My teacher：Oys，60% -&amp;gt; 实验做的越快越好，只验收一次，会分时刻下来验收，第一次验收的都是A。 40% -&amp;gt; 实验报告的完成。&#xA;Comments are still collecting ：&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Author&amp;rsquo;s opinions: 雷雷雷！！！ 快跑！ 啥也不讲，毫无容错，卷的要死，选lyj和lcf都会轻松不少。&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
     <item>
       <title>Some Greedy Algorithms</title>
       <link>https://cucumberleo.github.io/post/greedy-algorithms/</link>
