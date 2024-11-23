@@ -151,27 +151,27 @@
             </a>
         </h1>
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          <h2 id="ú">˳��������������ú���</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">˳�������ã�</span>
+          <h2 id="顺序表和链表逆置">顺序表和链表逆置</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">顺序表：</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> SeqList<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>Reverse(){
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,j<span style="color:#f92672">=</span>length<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;=</span>j;<span style="color:#f92672">++</span>i,<span style="color:#f92672">--</span>j){
 </span></span><span style="display:flex;"><span>		swap(elems[i],elems[j]);
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">�������ã�</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">链表：</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> LinkList<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>Reverse(){
 </span></span><span style="display:flex;"><span>	Node<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">*</span>cur <span style="color:#f92672">=</span> head<span style="color:#f92672">-&gt;</span>next;
 </span></span><span style="display:flex;"><span>	Node<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">*</span>prev <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
-</span></span><span style="display:flex;"><span>	Node<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">*</span>onxt <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;<span style="color:#75715e">//��¼ԭ�������ĵ�ǰ�ڵ�����һ���ڵ�
+</span></span><span style="display:flex;"><span>	Node<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">*</span>onxt <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;<span style="color:#75715e">//用于维护当前节点的下一个节点地址
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">while</span>(cur<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
 </span></span><span style="display:flex;"><span>		onxt <span style="color:#f92672">=</span> cur<span style="color:#f92672">-&gt;</span>next;
-</span></span><span style="display:flex;"><span>		cur<span style="color:#f92672">-&gt;</span>next <span style="color:#f92672">=</span> prev;<span style="color:#75715e">//����ǰָ��ָ��ǰһ���ڵ�
+</span></span><span style="display:flex;"><span>		cur<span style="color:#f92672">-&gt;</span>next <span style="color:#f92672">=</span> prev;<span style="color:#75715e">//将当前节点指向前一个节点
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		prev <span style="color:#f92672">=</span> cur;
-</span></span><span style="display:flex;"><span>		cur <span style="color:#f92672">=</span> onxt;<span style="color:#75715e">//����ǰָ���Ƶ��ռ�¼��ԭ��������һ���ڵ�
+</span></span><span style="display:flex;"><span>		cur <span style="color:#f92672">=</span> onxt;<span style="color:#75715e">//当前指针移动到刚维护的下一个节点
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	}
-</span></span><span style="display:flex;"><span>	head<span style="color:#f92672">-&gt;</span>next <span style="color:#f92672">=</span> prev;<span style="color:#75715e">//��ͷ�ڵ�ָ��������prev
+</span></span><span style="display:flex;"><span>	head<span style="color:#f92672">-&gt;</span>next <span style="color:#f92672">=</span> prev;<span style="color:#75715e">//将头结点的next指向prev
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
 </span></span></code></pre></div>
         </div>
