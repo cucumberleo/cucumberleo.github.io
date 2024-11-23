@@ -4,22 +4,30 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>Course | Zjh_canAc Tech-Blog</title>
+    <title>Dsw1 | Zjh_canAc Tech-Blog</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="description" content="Courses of Shanghai University(CS Major)
-Experiments
-Homework Page ：
-
-https://github.com/cucumberleo/My-courses-Shanghai-University-
-数字逻辑实验：My teacher：Oys，60% -&gt; 实验做的越快越好，只验收一次，会分时刻下来验收，第一次验收的都是A。 40% -&gt; 实验报告的完成。
-
-Comments are still collecting ：
-
-Author&rsquo;s opinions: 雷雷雷！！！ 快跑！ 啥也不讲，毫无容错，卷的要死，选lyj和lcf都会轻松不少。
-
-
-
-
+    <meta name="description" content="˳��������������ú���
+˳�������ã�
+template&lt;class T&gt;
+void SeqList&lt;T&gt;::Reverse(){
+	for(int i=0,j=length-1;i&lt;=j;&#43;&#43;i,--j){
+		swap(elems[i],elems[j]);
+	}
+}
+�������ã�
+template&lt;class T&gt;
+void LinkList&lt;T&gt;::Reverse(){
+	Node&lt;T&gt; *cur = head-&gt;next;
+	Node&lt;T&gt; *prev = nullptr;
+	Node&lt;T&gt; *onxt = nullptr;//��¼ԭ�������ĵ�ǰ�ڵ�����һ���ڵ�
+	while(cur!=nullptr){
+		onxt = cur-&gt;next;
+		cur-&gt;next = prev;//����ǰָ��ָ��ǰһ���ڵ�
+		prev = cur;
+		cur = onxt;//����ǰָ���Ƶ��ռ�¼��ԭ��������һ���ڵ�
+	}
+	head-&gt;next = prev;//��ͷ�ڵ�ָ��������prev
+}
 ">
     <meta name="generator" content="Hugo 0.136.2">
     
@@ -45,30 +53,27 @@ Author&rsquo;s opinions: 雷雷雷！！！ 快跑！ 啥也不讲，毫无容�
     
 
     
-      <link rel="canonical" href="https://cucumberleo.github.io/post/course/">
+      <link rel="canonical" href="https://cucumberleo.github.io/post/dsw1/">
     
 
-    <meta property="og:url" content="https://cucumberleo.github.io/post/course/">
+    <meta property="og:url" content="https://cucumberleo.github.io/post/dsw1/">
   <meta property="og:site_name" content="Zjh_canAc Tech-Blog">
-  <meta property="og:title" content="Course">
-  <meta property="og:description" content="Courses of Shanghai University(CS Major) Experiments Homework Page ：
-https://github.com/cucumberleo/My-courses-Shanghai-University- 数字逻辑实验：My teacher：Oys，60% -&gt; 实验做的越快越好，只验收一次，会分时刻下来验收，第一次验收的都是A。 40% -&gt; 实验报告的完成。 Comments are still collecting ： Author’s opinions: 雷雷雷！！！ 快跑！ 啥也不讲，毫无容错，卷的要死，选lyj和lcf都会轻松不少。">
+  <meta property="og:title" content="Dsw1">
+  <meta property="og:description" content="˳���������������ú��� ˳�������ã� template&lt;class T&gt; void SeqList&lt;T&gt;::Reverse(){ for(int i=0,j=length-1;i&lt;=j;&#43;&#43;i,--j){ swap(elems[i],elems[j]); } } �������ã� template&lt;class T&gt; void LinkList&lt;T&gt;::Reverse(){ Node&lt;T&gt; *cur = head-&gt;next; Node&lt;T&gt; *prev = nullptr; Node&lt;T&gt; *onxt = nullptr;//��¼ԭ�������ĵ�ǰ�ڵ�����һ���ڵ� while(cur!=nullptr){ onxt = cur-&gt;next; cur-&gt;next = prev;//����ǰָ��ָ��ǰһ���ڵ� prev = cur; cur = onxt;//����ǰָ���Ƶ��ռ�¼��ԭ��������һ���ڵ� } head-&gt;next = prev;//��ͷ�ڵ�ָ��������prev }">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:type" content="article">
     <meta property="article:section" content="post">
-    <meta property="article:published_time" content="2024-10-31T14:11:44+08:00">
-    <meta property="article:modified_time" content="2024-10-31T14:11:44+08:00">
+    <meta property="article:published_time" content="2024-11-23T12:17:29+08:00">
+    <meta property="article:modified_time" content="2024-11-23T12:17:29+08:00">
 
-  <meta itemprop="name" content="Course">
-  <meta itemprop="description" content="Courses of Shanghai University(CS Major) Experiments Homework Page ：
-https://github.com/cucumberleo/My-courses-Shanghai-University- 数字逻辑实验：My teacher：Oys，60% -&gt; 实验做的越快越好，只验收一次，会分时刻下来验收，第一次验收的都是A。 40% -&gt; 实验报告的完成。 Comments are still collecting ： Author’s opinions: 雷雷雷！！！ 快跑！ 啥也不讲，毫无容错，卷的要死，选lyj和lcf都会轻松不少。">
-  <meta itemprop="datePublished" content="2024-10-31T14:11:44+08:00">
-  <meta itemprop="dateModified" content="2024-10-31T14:11:44+08:00">
-  <meta itemprop="wordCount" content="27">
+  <meta itemprop="name" content="Dsw1">
+  <meta itemprop="description" content="˳���������������ú��� ˳�������ã� template&lt;class T&gt; void SeqList&lt;T&gt;::Reverse(){ for(int i=0,j=length-1;i&lt;=j;&#43;&#43;i,--j){ swap(elems[i],elems[j]); } } �������ã� template&lt;class T&gt; void LinkList&lt;T&gt;::Reverse(){ Node&lt;T&gt; *cur = head-&gt;next; Node&lt;T&gt; *prev = nullptr; Node&lt;T&gt; *onxt = nullptr;//��¼ԭ�������ĵ�ǰ�ڵ�����һ���ڵ� while(cur!=nullptr){ onxt = cur-&gt;next; cur-&gt;next = prev;//����ǰָ��ָ��ǰһ���ڵ� prev = cur; cur = onxt;//����ǰָ���Ƶ��ռ�¼��ԭ��������һ���ڵ� } head-&gt;next = prev;//��ͷ�ڵ�ָ��������prev }">
+  <meta itemprop="datePublished" content="2024-11-23T12:17:29+08:00">
+  <meta itemprop="dateModified" content="2024-11-23T12:17:29+08:00">
+  <meta itemprop="wordCount" content="46">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Course">
-  <meta name="twitter:description" content="Courses of Shanghai University(CS Major) Experiments Homework Page ：
-https://github.com/cucumberleo/My-courses-Shanghai-University- 数字逻辑实验：My teacher：Oys，60% -&gt; 实验做的越快越好，只验收一次，会分时刻下来验收，第一次验收的都是A。 40% -&gt; 实验报告的完成。 Comments are still collecting ： Author’s opinions: 雷雷雷！！！ 快跑！ 啥也不讲，毫无容错，卷的要死，选lyj和lcf都会轻松不少。">
+  <meta name="twitter:title" content="Dsw1">
+  <meta name="twitter:description" content="˳���������������ú��� ˳�������ã� template&lt;class T&gt; void SeqList&lt;T&gt;::Reverse(){ for(int i=0,j=length-1;i&lt;=j;&#43;&#43;i,--j){ swap(elems[i],elems[j]); } } �������ã� template&lt;class T&gt; void LinkList&lt;T&gt;::Reverse(){ Node&lt;T&gt; *cur = head-&gt;next; Node&lt;T&gt; *prev = nullptr; Node&lt;T&gt; *onxt = nullptr;//��¼ԭ�������ĵ�ǰ�ڵ�����һ���ڵ� while(cur!=nullptr){ onxt = cur-&gt;next; cur-&gt;next = prev;//����ǰָ��ָ��ǰһ���ڵ� prev = cur; cur = onxt;//����ǰָ���Ƶ��ռ�¼��ԭ��������һ���ڵ� } head-&gt;next = prev;//��ͷ�ڵ�ָ��������prev }">
 
       
     
@@ -164,32 +169,39 @@ https://github.com/cucumberleo/My-courses-Shanghai-University- 数字逻辑实�
               </span></a></div>
 
 
-<h1 class="f1 athelas mt3 mb1">Course</h1>
+<h1 class="f1 athelas mt3 mb1">Dsw1</h1>
       
       
       
-      <time class="f6 mv4 dib tracked" datetime="2024-10-31T14:11:44+08:00">October 31, 2024</time>
+      <time class="f6 mv4 dib tracked" datetime="2024-11-23T12:17:29+08:00">November 23, 2024</time>
       
 
       
       
     </header>
-    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><h1 id="courses-of-shanghai-universitycs-major">Courses of Shanghai University(CS Major)</h1>
-<h3 id="experiments">Experiments</h3>
-<p>Homework Page ：</p>
-<ul>
-<li><a href="https://github.com/cucumberleo/My-courses-Shanghai-University-">https://github.com/cucumberleo/My-courses-Shanghai-University-</a></li>
-<li>数字逻辑实验：My teacher：Oys，60% -&gt; 实验做的越快越好，只验收一次，会分时刻下来验收，第一次验收的都是A。 40% -&gt; 实验报告的完成。
-<ul>
-<li>Comments are still collecting ：
-<ol>
-<li>Author&rsquo;s opinions: 雷雷雷！！！ 快跑！ 啥也不讲，毫无容错，卷的要死，选lyj和lcf都会轻松不少。</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<ul class="pa0">
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><h2 id="ú">˳��������������ú���</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">˳�������ã�</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> SeqList<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>Reverse(){
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,j<span style="color:#f92672">=</span>length<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;=</span>j;<span style="color:#f92672">++</span>i,<span style="color:#f92672">--</span>j){
+</span></span><span style="display:flex;"><span>		swap(elems[i],elems[j]);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">�������ã�</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> LinkList<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;::</span>Reverse(){
+</span></span><span style="display:flex;"><span>	Node<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">*</span>cur <span style="color:#f92672">=</span> head<span style="color:#f92672">-&gt;</span>next;
+</span></span><span style="display:flex;"><span>	Node<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">*</span>prev <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
+</span></span><span style="display:flex;"><span>	Node<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#f92672">*</span>onxt <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;<span style="color:#75715e">//��¼ԭ�������ĵ�ǰ�ڵ�����һ���ڵ�
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">while</span>(cur<span style="color:#f92672">!=</span><span style="color:#66d9ef">nullptr</span>){
+</span></span><span style="display:flex;"><span>		onxt <span style="color:#f92672">=</span> cur<span style="color:#f92672">-&gt;</span>next;
+</span></span><span style="display:flex;"><span>		cur<span style="color:#f92672">-&gt;</span>next <span style="color:#f92672">=</span> prev;<span style="color:#75715e">//����ǰָ��ָ��ǰһ���ڵ�
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		prev <span style="color:#f92672">=</span> cur;
+</span></span><span style="display:flex;"><span>		cur <span style="color:#f92672">=</span> onxt;<span style="color:#75715e">//����ǰָ���Ƶ��ռ�¼��ԭ��������һ���ڵ�
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	}
+</span></span><span style="display:flex;"><span>	head<span style="color:#f92672">-&gt;</span>next <span style="color:#f92672">=</span> prev;<span style="color:#75715e">//��ͷ�ڵ�ָ��������prev
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><ul class="pa0">
   
 </ul>
 <div class="mt6 instapaper_ignoref">
