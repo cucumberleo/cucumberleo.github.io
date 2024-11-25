@@ -153,19 +153,19 @@
         <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
           <h2 id="lca">LCA</h2>
 <ul>
-<li>¸ø¶¨Ê÷µÄÍ¼£¬¿ìËÙ²éÕÒÈÎÒâÁ½¸ö½ÚµãµÄLCA</li>
-<li>Ë¼Â·£º
+<li>ç»™å®šæ ‘çš„å›¾ï¼Œå¿«é€ŸæŸ¥æ‰¾ä»»æ„ä¸¤ä¸ªèŠ‚ç‚¹çš„LCA</li>
+<li>æ€è·¯ï¼š
 <ol>
-<li>ĞèÒª×¼±¸µÄÒ»Ğ©´æ´¢ÈİÆ÷£º1. g[N]ÓÃÀ´´æÊ÷£¬ 2. parent[N][logN]ÓÃÀ´´æÃ¿¸ö½ÚµãµÄ×æÏÈ½Úµã£¬parent[i][j]º¬ÒåÊÇi½ÚµãÍùÉÏ×ß2^j²ãËùµÖ´ïµÄ×æ×Ú½Úµã£¬3. dis[i] ´æ´¢Ã¿¸ö½ÚµãµÄÉî¶È¡£</li>
-<li>dfs´«Èë¸ù½ÚµãÒÔ¼°¸ù½ÚµãµÄ¸¸Ç×Ä¬ÈÏÎª0 µÄ¹ı³ÌÖĞÒª×öÁ½¼şÊÂ£º
-step1£º½«µ±Ç°½ÚµãµÄ¸¸Ç×½Úµã¸üĞÂÎª´«ÈëµÄ¸¸Ç×£»parent[i][0] = father;
-step2£º½«µ±Ç°½ÚµãµÄÉî¶È¸üĞÂÎªdis[father] + 1;
-step3£ºj´Ó1-logNÀ´¸üĞÂparent[i][j] = parent[parent[i][j-1]][j-1] ´ÓµÚ2^j-1²ãµÄ×æ×Ú½Úµãµ½2^j²ãĞèÒªÏòÉÏ×ß2^j-1 ²ã 2^j = 2^j-1 + 2^j-1;
-step4: Èç¹ûÁÚ½ÓµÄ½Úµã²»ÊÇ×Ô¼ºµÄfatherÔòµİ¹édfs(nxt,cur);ÒÔÏÖÔÚµÄ½Úµã×÷ÎªÏÂÒ»¸ö½ÚµãµÄfather£¬ÏÂÒ»¸ö½ÚµãÎª³ÉÎªÏÂÒ»¸ö½Úµã¡£
-3.int LCA(int x,int y) ÕıÊ½¿ªÊ¼£º
-1.´ÓÔ¶µ½½ü³¢ÊÔ½«²ãÊıµÍµÄ½ÚµãxÍùÉÏÒÆ£¬µ«Í¬Ê±Òª±£Ö¤dis[parent[x][j]]&gt;=dis[y];
-2.´ËÊ±³öÏÖÁ½ÖÖÇé¿ö£ºÈç¹ûÁ½¸ö½Úµãx==yÖ±½Óreturn x;
-Èç¹û²»ÏàµÈÁ½¸öÒ²ÒÑ¾­ÔÚÍ¬Ò»²ã£¬½Ó×ÅÍ¬Ê±ÍùÉÏÒÆ¶¯£¬Ö±µ½Á½¸ö½ÚµãµÄ¸¸Ç×½ÚµãÒ»Ä£Ò»Ñù return parent[x][0];</li>
+<li>éœ€è¦å‡†å¤‡çš„ä¸€äº›å­˜å‚¨å®¹å™¨ï¼š1. g[N]ç”¨æ¥å­˜æ ‘ï¼Œ 2. parent[N][logN]ç”¨æ¥å­˜æ¯ä¸ªèŠ‚ç‚¹çš„ç¥–å…ˆèŠ‚ç‚¹ï¼Œparent[i][j]å«ä¹‰æ˜¯ièŠ‚ç‚¹å¾€ä¸Šèµ°2^jå±‚æ‰€æŠµè¾¾çš„ç¥–å®—èŠ‚ç‚¹ï¼Œ3. dis[i] å­˜å‚¨æ¯ä¸ªèŠ‚ç‚¹çš„æ·±åº¦ã€‚</li>
+<li>dfsä¼ å…¥æ ¹èŠ‚ç‚¹ä»¥åŠæ ¹èŠ‚ç‚¹çš„çˆ¶äº²é»˜è®¤ä¸º0 çš„è¿‡ç¨‹ä¸­è¦åšä¸¤ä»¶äº‹ï¼š
+step1ï¼šå°†å½“å‰èŠ‚ç‚¹çš„çˆ¶äº²èŠ‚ç‚¹æ›´æ–°ä¸ºä¼ å…¥çš„çˆ¶äº²ï¼›parent[i][0] = father;
+step2ï¼šå°†å½“å‰èŠ‚ç‚¹çš„æ·±åº¦æ›´æ–°ä¸ºdis[father] + 1;
+step3ï¼šjä»1-logNæ¥æ›´æ–°parent[i][j] = parent[parent[i][j-1]][j-1] ä»ç¬¬2^j-1å±‚çš„ç¥–å®—èŠ‚ç‚¹åˆ°2^jå±‚éœ€è¦å‘ä¸Šèµ°2^j-1 å±‚ 2^j = 2^j-1 + 2^j-1;
+step4: å¦‚æœé‚»æ¥çš„èŠ‚ç‚¹ä¸æ˜¯è‡ªå·±çš„fatheråˆ™é€’å½’dfs(nxt,cur);ä»¥ç°åœ¨çš„èŠ‚ç‚¹ä½œä¸ºä¸‹ä¸€ä¸ªèŠ‚ç‚¹çš„fatherï¼Œä¸‹ä¸€ä¸ªèŠ‚ç‚¹ä¸ºæˆä¸ºä¸‹ä¸€ä¸ªèŠ‚ç‚¹ã€‚
+3.int LCA(int x,int y) æ­£å¼å¼€å§‹ï¼š
+1.ä»è¿œåˆ°è¿‘å°è¯•å°†å±‚æ•°ä½çš„èŠ‚ç‚¹xå¾€ä¸Šç§»ï¼Œä½†åŒæ—¶è¦ä¿è¯dis[parent[x][j]]&gt;=dis[y];
+2.æ­¤æ—¶å‡ºç°ä¸¤ç§æƒ…å†µï¼šå¦‚æœä¸¤ä¸ªèŠ‚ç‚¹x==yç›´æ¥return x;
+å¦‚æœä¸ç›¸ç­‰ä¸¤ä¸ªä¹Ÿå·²ç»åœ¨åŒä¸€å±‚ï¼Œæ¥ç€åŒæ—¶å¾€ä¸Šç§»åŠ¨ï¼Œç›´åˆ°ä¸¤ä¸ªèŠ‚ç‚¹çš„çˆ¶äº²èŠ‚ç‚¹ä¸€æ¨¡ä¸€æ · return parent[x][0];</li>
 </ol>
 </li>
 </ul>
@@ -178,9 +178,9 @@ step4: Èç¹ûÁÚ½ÓµÄ½Úµã²»ÊÇ×Ô¼ºµÄfatherÔòµİ¹édfs(nxt,cur);ÒÔÏÖÔÚµÄ½Úµã×÷ÎªÏÂÒ»¸ö½Ú
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> MAX_N <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> t,n,q;
 </span></span><span style="display:flex;"><span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>g[N];
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> parent[N][MAX_N];<span style="color:#75715e">//ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È½Úµï¿½ parent[i][j]ï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½2^jï¿½ï¿½ï¿½Ä½Úµï¿½Öµ
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> dis[N];<span style="color:#75715e">//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dfs</span>(<span style="color:#66d9ef">int</span> cur,<span style="color:#66d9ef">int</span> par);<span style="color:#75715e">//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½Ô¼ï¿½parentï¿½ï¿½ï¿½ï¿½
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> parent[N][MAX_N];<span style="color:#75715e">//è®°å½•å€å¢çš„ç¥–å…ˆèŠ‚ç‚¹ parent[i][j]çš„å«ä¹‰æ˜¯ èŠ‚ç‚¹æ ¹èµ°2^jå±‚çš„èŠ‚ç‚¹å€¼
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> dis[N];<span style="color:#75715e">//è®¡ç®—æ·±åº¦
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dfs</span>(<span style="color:#66d9ef">int</span> cur,<span style="color:#66d9ef">int</span> par);<span style="color:#75715e">//ç”¨æ¥æ›´æ–°æ¯ä¸ªèŠ‚ç‚¹çš„æ·±åº¦ï¼Œä»¥åŠparentæ•°ç»„
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">lca</span>(<span style="color:#66d9ef">int</span> x,<span style="color:#66d9ef">int</span> y);
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">solve</span>()
 </span></span><span style="display:flex;"><span>{
