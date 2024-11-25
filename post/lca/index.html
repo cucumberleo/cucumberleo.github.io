@@ -4,89 +4,89 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     
-    <title>Some Greedy Algorithms | Zjh_canAc Tech-Blog</title>
+    <title>LCA | Zjh_canAc Tech-Blog</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="description" content="Greedy Algorithms
+    <meta name="description" content="LCA
 
-区间贪心问题（一般按先按左端点或者右端点排序）
-e.g:区间重复点问题，给定N个区间，然后选尽可能少的点，使得每个区间至少包含一个被选的点
+��������ͼ�����ٲ������������ڵ��LCA
+˼·��
 
-思路：按右端点排序，每层吃线段最右边的端点，遍历过程中如果包含上一次选的点就pass。
+��Ҫ׼����һЩ�洢������1. g[N]���������� 2. parent[N][logN]������ÿ���ڵ�����Ƚڵ㣬parent[i][j]������i�ڵ�������2^j�����ִ�����ڽڵ㣬3. dis[i] �洢ÿ���ڵ����ȡ�
+dfs������ڵ��Լ����ڵ�ĸ���Ĭ��Ϊ0 �Ĺ�����Ҫ�������£�
+step1������ǰ�ڵ�ĸ��׽ڵ����Ϊ����ĸ��ף�parent[i][0] = father;
+step2������ǰ�ڵ����ȸ���Ϊdis[father] &#43; 1;
+step3��j��1-logN������parent[i][j] = parent[parent[i][j-1]][j-1] �ӵ�2^j-1������ڽڵ㵽2^j����Ҫ������2^j-1 �� 2^j = 2^j-1 &#43; 2^j-1;
+step4: ����ڽӵĽڵ㲻���Լ���father��ݹ�dfs(nxt,cur);�����ڵĽڵ���Ϊ��һ���ڵ��father����һ���ڵ�Ϊ��Ϊ��һ���ڵ㡣
+3.int LCA(int x,int y) ��ʽ��ʼ��
+1.��Զ�������Խ������͵Ľڵ�x�����ƣ���ͬʱҪ��֤dis[parent[x][j]]&gt;=dis[y];
+2.��ʱ���������������������ڵ�x==yֱ��return x;
+������������Ҳ�Ѿ���ͬһ�㣬����ͬʱ�����ƶ���ֱ�������ڵ�ĸ��׽ڵ�һģһ�� return parent[x][0];
 
 
 
-#include&lt;bits/stdc&#43;&#43;.h&gt;
+#include &lt;bits/stdc&#43;&#43;.h&gt;
+typedef long long ll;
 using namespace std;
-const int N = 10010;
-struct node{
-    int l,r;
-    bool operator&lt;(const node &amp;w){
-        return r&lt;w.r;//按右端点从小到大排序
-    }
-}range[N];
-int n;
+typedef pair&lt;int,int&gt; PII;
+const int mod = 1e9&#43;7;
+const int N = 5e5 &#43;10;
+const int MAX_N = 20;
+int t,n,q;
+vector&lt;int&gt;g[N];
+int parent[N][MAX_N];//��¼���������Ƚڵ� parent[i][j]�ĺ����� �ڵ�����2^j���Ľڵ�ֵ
+int dis[N];//��������
+void dfs(int cur,int par);//��������ÿ���ڵ������ȣ��Լ�parent����
+int lca(int x,int y);
 void solve()
 {
-    cin &gt;&gt; n;
-    for(int i=0;i&lt;n;&#43;&#43;i){
-        int l,r;
-        cin &gt;&gt; l &gt;&gt; r;
-        range[i] = {l,r};
-    }
-    int ed = -2e9,cnt = 0;
-    sort(range,range&#43;n);
-    for(int i=0;i&lt;n;&#43;&#43;i){
-        if(range[i].l&gt;ed) {
-            &#43;&#43;cnt;
-            ed = range[i].r;
-        }
-    }
-    cout &lt;&lt; cnt &lt;&lt;endl;
+  int n,q;
+  cin &gt;&gt; n &gt;&gt; q;
+  for(int i=1;i&lt;n;&#43;&#43;i){
+    int u,v;
+    cin &gt;&gt; u &gt;&gt; v;
+    g[u].push_back(v),g[v].push_back(u);
+  }
+  dfs(1,0);
+  while(q--){
+    int x,y;
+    cin &gt;&gt; x &gt;&gt; y;
+    cout &lt;&lt; lca(x,y)&lt;&lt;endl;
+  }
+  return;
 }
-
 int main()
 {
-   solve();
+    cin.tie(0) -&gt; sync_with_stdio(0);
+    cout.tie(0) -&gt; sync_with_stdio(0);
+    solve();
     return 0;
 }
-
-Huffman tree
-e.g:合并果子 合并n堆果子（每次合并两堆，消耗的体力为两堆重量和）求合并消耗的最小体力
-本质上是一棵完全二叉树，每一个叶子节点到根节点的权值和为 路径长度*叶节点值
-思路： 最小的两个点，深度一定最深，且可以互为兄弟。（小的东西让他累积的多，大的深度小就可以让全局最小）
-核心思路就是每次选最小的两堆合并，然后合并成的一大堆果子入小根堆，继续合并
-
-#include&lt;bits/stdc&#43;&#43;.h&gt;
-using namespace std;
-
-void solve()
-{
-   int n;
-   cin &gt;&gt; n;
-   priority_queue&lt;int,vector&lt;int&gt;,greater&lt;int&gt; &gt;pq;
-   while(n--){
-    int x;
-    cin &gt;&gt; x;
-    pq.push(x);
-   }
-   int ans = 0;
-   while(pq.size()&gt;1){
-        int a = pq.top();pq.pop();
-        int b = pq.top();pq.pop();
-        ans &#43;= (a&#43;b);
-        pq.push(a&#43;b);
-   }
-   cout &lt;&lt; ans &lt;&lt;endl;
+void dfs(int cur,int par){
+  dis[cur] = dis[par] &#43; 1;
+  parent[cur][0] = par;
+  for(int i=1;i&lt;20;&#43;&#43;i){
+    parent[cur][i] = parent[parent[cur][i-1]][i-1];
+  }
+  for(auto nxt : g[cur]){
+    if(nxt!=par){
+      dfs(nxt,cur);
+    }
+  }
 }
-
-int main()
-{
-   ios_base::sync_with_stdio(false);
-   cin.tie(0),cout.tie(0);
-   solve();
-    return 0;
+int lca(int x,int y){
+  if(dis[x]&lt;dis[y]) swap(x,y);
+  for(int i=MAX_N-1;i&gt;=0;--i){
+    if(dis[parent[x][i]]&gt;=dis[y])
+      x = parent[x][i];
+  }
+  if(x==y) return x;
+  for(int j=MAX_N-1;j&gt;=0;--j){
+    if(parent[x][j]!=parent[y][j])
+      x = parent[x][j],y=parent[y][j];
+  }
+  return parent[x][0];
 }
-有关Huffman tree的一些总结：">
+">
     <meta name="generator" content="Hugo 0.136.2">
     
     
@@ -111,27 +111,27 @@ int main()
     
 
     
-      <link rel="canonical" href="https://cucumberleo.github.io/post/greedy-algorithms/">
+      <link rel="canonical" href="https://cucumberleo.github.io/post/lca/">
     
 
-    <meta property="og:url" content="https://cucumberleo.github.io/post/greedy-algorithms/">
+    <meta property="og:url" content="https://cucumberleo.github.io/post/lca/">
   <meta property="og:site_name" content="Zjh_canAc Tech-Blog">
-  <meta property="og:title" content="Some Greedy Algorithms">
-  <meta property="og:description" content="Greedy Algorithms 区间贪心问题（一般按先按左端点或者右端点排序） e.g:区间重复点问题，给定N个区间，然后选尽可能少的点，使得每个区间至少包含一个被选的点 思路：按右端点排序，每层吃线段最右边的端点，遍历过程中如果包含上一次选的点就pass。 #include&lt;bits/stdc&#43;&#43;.h&gt; using namespace std; const int N = 10010; struct node{ int l,r; bool operator&lt;(const node &amp;w){ return r&lt;w.r;//按右端点从小到大排序 } }range[N]; int n; void solve() { cin &gt;&gt; n; for(int i=0;i&lt;n;&#43;&#43;i){ int l,r; cin &gt;&gt; l &gt;&gt; r; range[i] = {l,r}; } int ed = -2e9,cnt = 0; sort(range,range&#43;n); for(int i=0;i&lt;n;&#43;&#43;i){ if(range[i].l&gt;ed) { &#43;&#43;cnt; ed = range[i].r; } } cout &lt;&lt; cnt &lt;&lt;endl; } int main() { solve(); return 0; } Huffman tree e.g:合并果子 合并n堆果子（每次合并两堆，消耗的体力为两堆重量和）求合并消耗的最小体力 本质上是一棵完全二叉树，每一个叶子节点到根节点的权值和为 路径长度*叶节点值 思路： 最小的两个点，深度一定最深，且可以互为兄弟。（小的东西让他累积的多，大的深度小就可以让全局最小） 核心思路就是每次选最小的两堆合并，然后合并成的一大堆果子入小根堆，继续合并 #include&lt;bits/stdc&#43;&#43;.h&gt; using namespace std; void solve() { int n; cin &gt;&gt; n; priority_queue&lt;int,vector&lt;int&gt;,greater&lt;int&gt; &gt;pq; while(n--){ int x; cin &gt;&gt; x; pq.push(x); } int ans = 0; while(pq.size()&gt;1){ int a = pq.top();pq.pop(); int b = pq.top();pq.pop(); ans &#43;= (a&#43;b); pq.push(a&#43;b); } cout &lt;&lt; ans &lt;&lt;endl; } int main() { ios_base::sync_with_stdio(false); cin.tie(0),cout.tie(0); solve(); return 0; } 有关Huffman tree的一些总结：">
+  <meta property="og:title" content="LCA">
+  <meta property="og:description" content="LCA ��������ͼ�����ٲ������������ڵ���LCA ˼·�� ��Ҫ׼����һЩ�洢������1. g[N]���������� 2. parent[N][logN]������ÿ���ڵ������Ƚڵ㣬parent[i][j]������i�ڵ�������2^j�����ִ������ڽڵ㣬3. dis[i] �洢ÿ���ڵ������ȡ� dfs�������ڵ��Լ����ڵ��ĸ���Ĭ��Ϊ0 �Ĺ�����Ҫ�������£� step1������ǰ�ڵ��ĸ��׽ڵ�����Ϊ�����ĸ��ף�parent[i][0] = father; step2������ǰ�ڵ������ȸ���Ϊdis[father] &#43; 1; step3��j��1-logN������parent[i][j] = parent[parent[i][j-1]][j-1] �ӵ�2^j-1�������ڽڵ㵽2^j����Ҫ������2^j-1 �� 2^j = 2^j-1 &#43; 2^j-1; step4: �����ڽӵĽڵ㲻���Լ���father���ݹ�dfs(nxt,cur);�����ڵĽڵ���Ϊ��һ���ڵ���father����һ���ڵ�Ϊ��Ϊ��һ���ڵ㡣 3.int LCA(int x,int y) ��ʽ��ʼ�� 1.��Զ�������Խ������͵Ľڵ�x�����ƣ���ͬʱҪ��֤dis[parent[x][j]]&gt;=dis[y]; 2.��ʱ�����������������������ڵ�x==yֱ��return x; ��������������Ҳ�Ѿ���ͬһ�㣬����ͬʱ�����ƶ���ֱ�������ڵ��ĸ��׽ڵ�һģһ�� return parent[x][0]; #include &lt;bits/stdc&#43;&#43;.h&gt; typedef long long ll; using namespace std; typedef pair&lt;int,int&gt; PII; const int mod = 1e9&#43;7; const int N = 5e5 &#43;10; const int MAX_N = 20; int t,n,q; vector&lt;int&gt;g[N]; int parent[N][MAX_N];//��¼���������Ƚڵ� parent[i][j]�ĺ����� �ڵ�����2^j���Ľڵ�ֵ int dis[N];//�������� void dfs(int cur,int par);//��������ÿ���ڵ������ȣ��Լ�parent���� int lca(int x,int y); void solve() { int n,q; cin &gt;&gt; n &gt;&gt; q; for(int i=1;i&lt;n;&#43;&#43;i){ int u,v; cin &gt;&gt; u &gt;&gt; v; g[u].push_back(v),g[v].push_back(u); } dfs(1,0); while(q--){ int x,y; cin &gt;&gt; x &gt;&gt; y; cout &lt;&lt; lca(x,y)&lt;&lt;endl; } return; } int main() { cin.tie(0) -&gt; sync_with_stdio(0); cout.tie(0) -&gt; sync_with_stdio(0); solve(); return 0; } void dfs(int cur,int par){ dis[cur] = dis[par] &#43; 1; parent[cur][0] = par; for(int i=1;i&lt;20;&#43;&#43;i){ parent[cur][i] = parent[parent[cur][i-1]][i-1]; } for(auto nxt : g[cur]){ if(nxt!=par){ dfs(nxt,cur); } } } int lca(int x,int y){ if(dis[x]&lt;dis[y]) swap(x,y); for(int i=MAX_N-1;i&gt;=0;--i){ if(dis[parent[x][i]]&gt;=dis[y]) x = parent[x][i]; } if(x==y) return x; for(int j=MAX_N-1;j&gt;=0;--j){ if(parent[x][j]!=parent[y][j]) x = parent[x][j],y=parent[y][j]; } return parent[x][0]; }">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:type" content="article">
     <meta property="article:section" content="post">
-    <meta property="article:published_time" content="2024-10-23T10:05:50+08:00">
-    <meta property="article:modified_time" content="2024-10-23T10:05:50+08:00">
+    <meta property="article:published_time" content="2024-11-25T13:05:50+08:00">
+    <meta property="article:modified_time" content="2024-11-25T13:05:50+08:00">
 
-  <meta itemprop="name" content="Some Greedy Algorithms">
-  <meta itemprop="description" content="Greedy Algorithms 区间贪心问题（一般按先按左端点或者右端点排序） e.g:区间重复点问题，给定N个区间，然后选尽可能少的点，使得每个区间至少包含一个被选的点 思路：按右端点排序，每层吃线段最右边的端点，遍历过程中如果包含上一次选的点就pass。 #include&lt;bits/stdc&#43;&#43;.h&gt; using namespace std; const int N = 10010; struct node{ int l,r; bool operator&lt;(const node &amp;w){ return r&lt;w.r;//按右端点从小到大排序 } }range[N]; int n; void solve() { cin &gt;&gt; n; for(int i=0;i&lt;n;&#43;&#43;i){ int l,r; cin &gt;&gt; l &gt;&gt; r; range[i] = {l,r}; } int ed = -2e9,cnt = 0; sort(range,range&#43;n); for(int i=0;i&lt;n;&#43;&#43;i){ if(range[i].l&gt;ed) { &#43;&#43;cnt; ed = range[i].r; } } cout &lt;&lt; cnt &lt;&lt;endl; } int main() { solve(); return 0; } Huffman tree e.g:合并果子 合并n堆果子（每次合并两堆，消耗的体力为两堆重量和）求合并消耗的最小体力 本质上是一棵完全二叉树，每一个叶子节点到根节点的权值和为 路径长度*叶节点值 思路： 最小的两个点，深度一定最深，且可以互为兄弟。（小的东西让他累积的多，大的深度小就可以让全局最小） 核心思路就是每次选最小的两堆合并，然后合并成的一大堆果子入小根堆，继续合并 #include&lt;bits/stdc&#43;&#43;.h&gt; using namespace std; void solve() { int n; cin &gt;&gt; n; priority_queue&lt;int,vector&lt;int&gt;,greater&lt;int&gt; &gt;pq; while(n--){ int x; cin &gt;&gt; x; pq.push(x); } int ans = 0; while(pq.size()&gt;1){ int a = pq.top();pq.pop(); int b = pq.top();pq.pop(); ans &#43;= (a&#43;b); pq.push(a&#43;b); } cout &lt;&lt; ans &lt;&lt;endl; } int main() { ios_base::sync_with_stdio(false); cin.tie(0),cout.tie(0); solve(); return 0; } 有关Huffman tree的一些总结：">
-  <meta itemprop="datePublished" content="2024-10-23T10:05:50+08:00">
-  <meta itemprop="dateModified" content="2024-10-23T10:05:50+08:00">
-  <meta itemprop="wordCount" content="243">
+  <meta itemprop="name" content="LCA">
+  <meta itemprop="description" content="LCA ��������ͼ�����ٲ������������ڵ���LCA ˼·�� ��Ҫ׼����һЩ�洢������1. g[N]���������� 2. parent[N][logN]������ÿ���ڵ������Ƚڵ㣬parent[i][j]������i�ڵ�������2^j�����ִ������ڽڵ㣬3. dis[i] �洢ÿ���ڵ������ȡ� dfs�������ڵ��Լ����ڵ��ĸ���Ĭ��Ϊ0 �Ĺ�����Ҫ�������£� step1������ǰ�ڵ��ĸ��׽ڵ�����Ϊ�����ĸ��ף�parent[i][0] = father; step2������ǰ�ڵ������ȸ���Ϊdis[father] &#43; 1; step3��j��1-logN������parent[i][j] = parent[parent[i][j-1]][j-1] �ӵ�2^j-1�������ڽڵ㵽2^j����Ҫ������2^j-1 �� 2^j = 2^j-1 &#43; 2^j-1; step4: �����ڽӵĽڵ㲻���Լ���father���ݹ�dfs(nxt,cur);�����ڵĽڵ���Ϊ��һ���ڵ���father����һ���ڵ�Ϊ��Ϊ��һ���ڵ㡣 3.int LCA(int x,int y) ��ʽ��ʼ�� 1.��Զ�������Խ������͵Ľڵ�x�����ƣ���ͬʱҪ��֤dis[parent[x][j]]&gt;=dis[y]; 2.��ʱ�����������������������ڵ�x==yֱ��return x; ��������������Ҳ�Ѿ���ͬһ�㣬����ͬʱ�����ƶ���ֱ�������ڵ��ĸ��׽ڵ�һģһ�� return parent[x][0]; #include &lt;bits/stdc&#43;&#43;.h&gt; typedef long long ll; using namespace std; typedef pair&lt;int,int&gt; PII; const int mod = 1e9&#43;7; const int N = 5e5 &#43;10; const int MAX_N = 20; int t,n,q; vector&lt;int&gt;g[N]; int parent[N][MAX_N];//��¼���������Ƚڵ� parent[i][j]�ĺ����� �ڵ�����2^j���Ľڵ�ֵ int dis[N];//�������� void dfs(int cur,int par);//��������ÿ���ڵ������ȣ��Լ�parent���� int lca(int x,int y); void solve() { int n,q; cin &gt;&gt; n &gt;&gt; q; for(int i=1;i&lt;n;&#43;&#43;i){ int u,v; cin &gt;&gt; u &gt;&gt; v; g[u].push_back(v),g[v].push_back(u); } dfs(1,0); while(q--){ int x,y; cin &gt;&gt; x &gt;&gt; y; cout &lt;&lt; lca(x,y)&lt;&lt;endl; } return; } int main() { cin.tie(0) -&gt; sync_with_stdio(0); cout.tie(0) -&gt; sync_with_stdio(0); solve(); return 0; } void dfs(int cur,int par){ dis[cur] = dis[par] &#43; 1; parent[cur][0] = par; for(int i=1;i&lt;20;&#43;&#43;i){ parent[cur][i] = parent[parent[cur][i-1]][i-1]; } for(auto nxt : g[cur]){ if(nxt!=par){ dfs(nxt,cur); } } } int lca(int x,int y){ if(dis[x]&lt;dis[y]) swap(x,y); for(int i=MAX_N-1;i&gt;=0;--i){ if(dis[parent[x][i]]&gt;=dis[y]) x = parent[x][i]; } if(x==y) return x; for(int j=MAX_N-1;j&gt;=0;--j){ if(parent[x][j]!=parent[y][j]) x = parent[x][j],y=parent[y][j]; } return parent[x][0]; }">
+  <meta itemprop="datePublished" content="2024-11-25T13:05:50+08:00">
+  <meta itemprop="dateModified" content="2024-11-25T13:05:50+08:00">
+  <meta itemprop="wordCount" content="187">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Some Greedy Algorithms">
-  <meta name="twitter:description" content="Greedy Algorithms 区间贪心问题（一般按先按左端点或者右端点排序） e.g:区间重复点问题，给定N个区间，然后选尽可能少的点，使得每个区间至少包含一个被选的点 思路：按右端点排序，每层吃线段最右边的端点，遍历过程中如果包含上一次选的点就pass。 #include&lt;bits/stdc&#43;&#43;.h&gt; using namespace std; const int N = 10010; struct node{ int l,r; bool operator&lt;(const node &amp;w){ return r&lt;w.r;//按右端点从小到大排序 } }range[N]; int n; void solve() { cin &gt;&gt; n; for(int i=0;i&lt;n;&#43;&#43;i){ int l,r; cin &gt;&gt; l &gt;&gt; r; range[i] = {l,r}; } int ed = -2e9,cnt = 0; sort(range,range&#43;n); for(int i=0;i&lt;n;&#43;&#43;i){ if(range[i].l&gt;ed) { &#43;&#43;cnt; ed = range[i].r; } } cout &lt;&lt; cnt &lt;&lt;endl; } int main() { solve(); return 0; } Huffman tree e.g:合并果子 合并n堆果子（每次合并两堆，消耗的体力为两堆重量和）求合并消耗的最小体力 本质上是一棵完全二叉树，每一个叶子节点到根节点的权值和为 路径长度*叶节点值 思路： 最小的两个点，深度一定最深，且可以互为兄弟。（小的东西让他累积的多，大的深度小就可以让全局最小） 核心思路就是每次选最小的两堆合并，然后合并成的一大堆果子入小根堆，继续合并 #include&lt;bits/stdc&#43;&#43;.h&gt; using namespace std; void solve() { int n; cin &gt;&gt; n; priority_queue&lt;int,vector&lt;int&gt;,greater&lt;int&gt; &gt;pq; while(n--){ int x; cin &gt;&gt; x; pq.push(x); } int ans = 0; while(pq.size()&gt;1){ int a = pq.top();pq.pop(); int b = pq.top();pq.pop(); ans &#43;= (a&#43;b); pq.push(a&#43;b); } cout &lt;&lt; ans &lt;&lt;endl; } int main() { ios_base::sync_with_stdio(false); cin.tie(0),cout.tie(0); solve(); return 0; } 有关Huffman tree的一些总结：">
+  <meta name="twitter:title" content="LCA">
+  <meta name="twitter:description" content="LCA ��������ͼ�����ٲ������������ڵ���LCA ˼·�� ��Ҫ׼����һЩ�洢������1. g[N]���������� 2. parent[N][logN]������ÿ���ڵ������Ƚڵ㣬parent[i][j]������i�ڵ�������2^j�����ִ������ڽڵ㣬3. dis[i] �洢ÿ���ڵ������ȡ� dfs�������ڵ��Լ����ڵ��ĸ���Ĭ��Ϊ0 �Ĺ�����Ҫ�������£� step1������ǰ�ڵ��ĸ��׽ڵ�����Ϊ�����ĸ��ף�parent[i][0] = father; step2������ǰ�ڵ������ȸ���Ϊdis[father] &#43; 1; step3��j��1-logN������parent[i][j] = parent[parent[i][j-1]][j-1] �ӵ�2^j-1�������ڽڵ㵽2^j����Ҫ������2^j-1 �� 2^j = 2^j-1 &#43; 2^j-1; step4: �����ڽӵĽڵ㲻���Լ���father���ݹ�dfs(nxt,cur);�����ڵĽڵ���Ϊ��һ���ڵ���father����һ���ڵ�Ϊ��Ϊ��һ���ڵ㡣 3.int LCA(int x,int y) ��ʽ��ʼ�� 1.��Զ�������Խ������͵Ľڵ�x�����ƣ���ͬʱҪ��֤dis[parent[x][j]]&gt;=dis[y]; 2.��ʱ�����������������������ڵ�x==yֱ��return x; ��������������Ҳ�Ѿ���ͬһ�㣬����ͬʱ�����ƶ���ֱ�������ڵ��ĸ��׽ڵ�һģһ�� return parent[x][0]; #include &lt;bits/stdc&#43;&#43;.h&gt; typedef long long ll; using namespace std; typedef pair&lt;int,int&gt; PII; const int mod = 1e9&#43;7; const int N = 5e5 &#43;10; const int MAX_N = 20; int t,n,q; vector&lt;int&gt;g[N]; int parent[N][MAX_N];//��¼���������Ƚڵ� parent[i][j]�ĺ����� �ڵ�����2^j���Ľڵ�ֵ int dis[N];//�������� void dfs(int cur,int par);//��������ÿ���ڵ������ȣ��Լ�parent���� int lca(int x,int y); void solve() { int n,q; cin &gt;&gt; n &gt;&gt; q; for(int i=1;i&lt;n;&#43;&#43;i){ int u,v; cin &gt;&gt; u &gt;&gt; v; g[u].push_back(v),g[v].push_back(u); } dfs(1,0); while(q--){ int x,y; cin &gt;&gt; x &gt;&gt; y; cout &lt;&lt; lca(x,y)&lt;&lt;endl; } return; } int main() { cin.tie(0) -&gt; sync_with_stdio(0); cout.tie(0) -&gt; sync_with_stdio(0); solve(); return 0; } void dfs(int cur,int par){ dis[cur] = dis[par] &#43; 1; parent[cur][0] = par; for(int i=1;i&lt;20;&#43;&#43;i){ parent[cur][i] = parent[parent[cur][i-1]][i-1]; } for(auto nxt : g[cur]){ if(nxt!=par){ dfs(nxt,cur); } } } int lca(int x,int y){ if(dis[x]&lt;dis[y]) swap(x,y); for(int i=MAX_N-1;i&gt;=0;--i){ if(dis[parent[x][i]]&gt;=dis[y]) x = parent[x][i]; } if(x==y) return x; for(int j=MAX_N-1;j&gt;=0;--j){ if(parent[x][j]!=parent[y][j]) x = parent[x][j],y=parent[y][j]; } return parent[x][0]; }">
 
       
     
@@ -227,142 +227,97 @@ int main()
               </span></a></div>
 
 
-<h1 class="f1 athelas mt3 mb1">Some Greedy Algorithms</h1>
+<h1 class="f1 athelas mt3 mb1">LCA</h1>
       
       
       
-      <time class="f6 mv4 dib tracked" datetime="2024-10-23T10:05:50+08:00">October 23, 2024</time>
+      <time class="f6 mv4 dib tracked" datetime="2024-11-25T13:05:50+08:00">November 25, 2024</time>
       
 
       
       
     </header>
-    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><h2 id="greedy-algorithms">Greedy Algorithms</h2>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><h2 id="lca">LCA</h2>
 <ul>
-<li>区间贪心问题（一般按先按左端点或者右端点排序）
-e.g:区间重复点问题，给定N个区间，然后选尽可能少的点，使得每个区间至少包含一个被选的点
+<li>��������ͼ�����ٲ������������ڵ��LCA</li>
+<li>˼·��
 <ol>
-<li>思路：按右端点排序，每层吃线段最右边的端点，遍历过程中如果包含上一次选的点就pass。</li>
+<li>��Ҫ׼����һЩ�洢������1. g[N]���������� 2. parent[N][logN]������ÿ���ڵ�����Ƚڵ㣬parent[i][j]������i�ڵ�������2^j�����ִ�����ڽڵ㣬3. dis[i] �洢ÿ���ڵ����ȡ�</li>
+<li>dfs������ڵ��Լ����ڵ�ĸ���Ĭ��Ϊ0 �Ĺ�����Ҫ�������£�
+step1������ǰ�ڵ�ĸ��׽ڵ����Ϊ����ĸ��ף�parent[i][0] = father;
+step2������ǰ�ڵ����ȸ���Ϊdis[father] + 1;
+step3��j��1-logN������parent[i][j] = parent[parent[i][j-1]][j-1] �ӵ�2^j-1������ڽڵ㵽2^j����Ҫ������2^j-1 �� 2^j = 2^j-1 + 2^j-1;
+step4: ����ڽӵĽڵ㲻���Լ���father��ݹ�dfs(nxt,cur);�����ڵĽڵ���Ϊ��һ���ڵ��father����һ���ڵ�Ϊ��Ϊ��һ���ڵ㡣
+3.int LCA(int x,int y) ��ʽ��ʼ��
+1.��Զ�������Խ������͵Ľڵ�x�����ƣ���ͬʱҪ��֤dis[parent[x][j]]&gt;=dis[y];
+2.��ʱ���������������������ڵ�x==yֱ��return x;
+������������Ҳ�Ѿ���ͬһ�㣬����ͬʱ�����ƶ���ֱ�������ڵ�ĸ��׽ڵ�һģһ�� return parent[x][0];</li>
 </ol>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include&lt;bits/stdc++.h&gt;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> N <span style="color:#f92672">=</span> <span style="color:#ae81ff">10010</span>;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">node</span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> l,r;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">&lt;</span>(<span style="color:#66d9ef">const</span> node <span style="color:#f92672">&amp;</span>w){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> r<span style="color:#f92672">&lt;</span>w.r;<span style="color:#75715e">//按右端点从小到大排序
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
-</span></span><span style="display:flex;"><span>}range[N];
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> n;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;bits/stdc++.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> ll;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> pair<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>,<span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> PII;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> mod <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e9</span><span style="color:#f92672">+</span><span style="color:#ae81ff">7</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> N <span style="color:#f92672">=</span> <span style="color:#ae81ff">5e5</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> MAX_N <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> t,n,q;
+</span></span><span style="display:flex;"><span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>g[N];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> parent[N][MAX_N];<span style="color:#75715e">//��¼���������Ƚڵ� parent[i][j]�ĺ����� �ڵ�����2^j���Ľڵ�ֵ
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> dis[N];<span style="color:#75715e">//��������
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dfs</span>(<span style="color:#66d9ef">int</span> cur,<span style="color:#66d9ef">int</span> par);<span style="color:#75715e">//��������ÿ���ڵ������ȣ��Լ�parent����
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">lca</span>(<span style="color:#66d9ef">int</span> x,<span style="color:#66d9ef">int</span> y);
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">solve</span>()
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    cin <span style="color:#f92672">&gt;&gt;</span> n;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>n;<span style="color:#f92672">++</span>i){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> l,r;
-</span></span><span style="display:flex;"><span>        cin <span style="color:#f92672">&gt;&gt;</span> l <span style="color:#f92672">&gt;&gt;</span> r;
-</span></span><span style="display:flex;"><span>        range[i] <span style="color:#f92672">=</span> {l,r};
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> ed <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">2e9</span>,cnt <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    sort(range,range<span style="color:#f92672">+</span>n);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>n;<span style="color:#f92672">++</span>i){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(range[i].l<span style="color:#f92672">&gt;</span>ed) {
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">++</span>cnt;
-</span></span><span style="display:flex;"><span>            ed <span style="color:#f92672">=</span> range[i].r;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> cnt <span style="color:#f92672">&lt;&lt;</span>endl;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> n,q;
+</span></span><span style="display:flex;"><span>  cin <span style="color:#f92672">&gt;&gt;</span> n <span style="color:#f92672">&gt;&gt;</span> q;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;</span>n;<span style="color:#f92672">++</span>i){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> u,v;
+</span></span><span style="display:flex;"><span>    cin <span style="color:#f92672">&gt;&gt;</span> u <span style="color:#f92672">&gt;&gt;</span> v;
+</span></span><span style="display:flex;"><span>    g[u].push_back(v),g[v].push_back(u);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  dfs(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">while</span>(q<span style="color:#f92672">--</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> x,y;
+</span></span><span style="display:flex;"><span>    cin <span style="color:#f92672">&gt;&gt;</span> x <span style="color:#f92672">&gt;&gt;</span> y;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> lca(x,y)<span style="color:#f92672">&lt;&lt;</span>endl;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span>;
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
 </span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>   solve();
+</span></span><span style="display:flex;"><span>    cin.tie(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">-&gt;</span> sync_with_stdio(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    cout.tie(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">-&gt;</span> sync_with_stdio(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    solve();
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ul>
-<li><strong>Huffman tree</strong>
-e.g:合并果子 合并n堆果子（每次合并两堆，消耗的体力为两堆重量和）求合并消耗的最小体力
-本质上是一棵完全二叉树，每一个叶子节点到根节点的权值和为 路径长度*叶节点值</li>
-<li>思路： 最小的两个点，深度一定最深，且可以互为兄弟。（小的东西让他累积的多，大的深度小就可以让全局最小）
-核心思路就是每次选最小的两堆合并，然后合并成的一大堆果子入小根堆，继续合并</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include&lt;bits/stdc++.h&gt;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">solve</span>()
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">int</span> n;
-</span></span><span style="display:flex;"><span>   cin <span style="color:#f92672">&gt;&gt;</span> n;
-</span></span><span style="display:flex;"><span>   priority_queue<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>,vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>,greater<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span>pq;
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">while</span>(n<span style="color:#f92672">--</span>){
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> x;
-</span></span><span style="display:flex;"><span>    cin <span style="color:#f92672">&gt;&gt;</span> x;
-</span></span><span style="display:flex;"><span>    pq.push(x);
-</span></span><span style="display:flex;"><span>   }
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">int</span> ans <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">while</span>(pq.size()<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">1</span>){
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> pq.top();pq.pop();
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> b <span style="color:#f92672">=</span> pq.top();pq.pop();
-</span></span><span style="display:flex;"><span>        ans <span style="color:#f92672">+=</span> (a<span style="color:#f92672">+</span>b);
-</span></span><span style="display:flex;"><span>        pq.push(a<span style="color:#f92672">+</span>b);
-</span></span><span style="display:flex;"><span>   }
-</span></span><span style="display:flex;"><span>   cout <span style="color:#f92672">&lt;&lt;</span> ans <span style="color:#f92672">&lt;&lt;</span>endl;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>   ios_base<span style="color:#f92672">::</span>sync_with_stdio(false);
-</span></span><span style="display:flex;"><span>   cin.tie(<span style="color:#ae81ff">0</span>),cout.tie(<span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>   solve();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>有关Huffman tree的一些总结：</p>
-<ul>
-<li>实现哈夫曼树的方式有很多种，可以使用优先队列（Priority Queue）简单达成这个过程，给与权重较低的符号较高的优先级（Priority），算法如下：
-⒈把n个终端节点加入优先队列，则n个节点都有一个优先权Pi，1 ≤ i ≤ n
-⒉如果队列内的节点数&gt;1，则：
-⑴从队列中移除两个最小的Pi节点，即连续做两次remove（min（Pi）, Priority_Queue)
-⑵产生一个新节点，此节点为（1）之移除节点之父节点，而此节点的权重值为（1）两节点之权重和
-⑶把（2）产生之节点加入优先队列中
-实际应用中可以用来进行数据压缩（出现几率大的（权值高）放在较浅的层，低的则放在深层，则带权路径和最短）</li>
-</ul>
-<p>$Leetcode .910 最小差值II（贪心的好题）$</p>
-<ul>
-<li><a href="https://leetcode.cn/problems/smallest-range-ii/description/?envType=daily-question&amp;envId=2024-10-21">https://leetcode.cn/problems/smallest-range-ii/description/?envType=daily-question&amp;envId=2024-10-21</a>
-<a href="https://imgse.com/i/pAwrytJ"><img src="https://s21.ax1x.com/2024/10/25/pAwrytJ.png" alt="pAwrytJ.png"></a></li>
-<li><strong>思路</strong>
-<ol>
-<li>该贪心满足一定的规律，具有一定的单调性</li>
-<li>一定是从某个点开始全都是加或全都是减k，极端情况：全都加或全都减，则最大和最小差值不变。</li>
-<li>一般情况分为两种：1. 从i这个下标之前全部为-k，从i这个下标之后全是+k。 2. 从i这个下标之前全是+k，从i这个下标之后全是-k
-4.现在考虑case1，此时一眼看出，最小的仍然是0这个下标对应的值 = nums[0] - k,而最大则变为，nums.back()+ k ,则差值恒为nums.back()-nums[0]+2k,不减反增；再考虑case2：前面全+k，后面全-k，则最大值的可能情况有两种，本质上变成了断点在 i 的分段函数最大值最小值问题，
-<ol>
-<li>nums[i]-k &lt; nums[i+1]-k &lt; &hellip; &lt; nums.back()-k</li>
-<li>nums[0]+k &lt; nums[1]+k &lt; &hellip; &lt; nums[i-1]+k
-这俩分段函数最大值可能是 nums.back() - k 也有可能是 nums[i-1] + k.
-最小值可能是 nums[0] + k 也有可能是 nums[i-1] - k<br>
-所以很轻松能够得到贪心思路，遍历每种可能的i，然后记录当前最大值和最小值，然后更新两者之差的最小值</li>
-</ol>
-</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span> {
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> smallestRangeII(vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;&amp;</span> nums, <span style="color:#66d9ef">int</span> k) {
-</span></span><span style="display:flex;"><span>        sort(nums.begin(),nums.end());
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> nums.size();
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> ans <span style="color:#f92672">=</span> nums.back()<span style="color:#f92672">-</span>nums[<span style="color:#ae81ff">0</span>];
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;</span>n;<span style="color:#f92672">++</span>i){
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> mx <span style="color:#f92672">=</span> max(nums[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">+</span>k,nums.back()<span style="color:#f92672">-</span>k);
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> mn <span style="color:#f92672">=</span> min(nums[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span>k,nums[i]<span style="color:#f92672">-</span>k);
-</span></span><span style="display:flex;"><span>            ans <span style="color:#f92672">=</span> min(ans,mx<span style="color:#f92672">-</span>mn);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ans;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dfs</span>(<span style="color:#66d9ef">int</span> cur,<span style="color:#66d9ef">int</span> par){
+</span></span><span style="display:flex;"><span>  dis[cur] <span style="color:#f92672">=</span> dis[par] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  parent[cur][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> par;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">20</span>;<span style="color:#f92672">++</span>i){
+</span></span><span style="display:flex;"><span>    parent[cur][i] <span style="color:#f92672">=</span> parent[parent[cur][i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]][i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>];
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">auto</span> nxt : g[cur]){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(nxt<span style="color:#f92672">!=</span>par){
+</span></span><span style="display:flex;"><span>      dfs(nxt,cur);
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div></li>
-</ul>
-<ul class="pa0">
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">lca</span>(<span style="color:#66d9ef">int</span> x,<span style="color:#66d9ef">int</span> y){
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(dis[x]<span style="color:#f92672">&lt;</span>dis[y]) swap(x,y);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>MAX_N<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">0</span>;<span style="color:#f92672">--</span>i){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(dis[parent[x][i]]<span style="color:#f92672">&gt;=</span>dis[y])
+</span></span><span style="display:flex;"><span>      x <span style="color:#f92672">=</span> parent[x][i];
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(x<span style="color:#f92672">==</span>y) <span style="color:#66d9ef">return</span> x;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> j<span style="color:#f92672">=</span>MAX_N<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;j<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">0</span>;<span style="color:#f92672">--</span>j){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(parent[x][j]<span style="color:#f92672">!=</span>parent[y][j])
+</span></span><span style="display:flex;"><span>      x <span style="color:#f92672">=</span> parent[x][j],y<span style="color:#f92672">=</span>parent[y][j];
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> parent[x][<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul class="pa0">
   
 </ul>
 <div class="mt6 instapaper_ignoref">

@@ -46,8 +46,8 @@
   <meta property="og:type" content="website">
 
   <meta itemprop="name" content="Posts">
-  <meta itemprop="datePublished" content="2024-11-23T12:17:29+08:00">
-  <meta itemprop="dateModified" content="2024-11-23T12:17:29+08:00">
+  <meta itemprop="datePublished" content="2024-11-25T13:05:50+08:00">
+  <meta itemprop="dateModified" content="2024-11-25T13:05:50+08:00">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Posts">
 
@@ -117,6 +117,106 @@
       
     </section>
     <aside class="flex-ns flex-wrap justify-around mt5">
+      
+        <div class="relative w-100 w-30-l mb4 bg-white">
+            <div class="mb3 pa4 mid-gray overflow-hidden">
+    
+      <div class="f6">
+        November 25, 2024
+      </div>
+    
+    <h1 class="f3 near-black">
+      <a href="/post/lca/" class="link black dim">
+        LCA
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      <h2 id="lca">LCA</h2>
+<ul>
+<li>给定树的图，快速查找任意两个节点的LCA</li>
+<li>思路：
+<ol>
+<li>需要准备的一些存储容器：1. g[N]用来存树， 2. parent[N][logN]用来存每个节点的祖先节点，parent[i][j]含义是i节点往上走2^j层所抵达的祖宗节点，3. dis[i] 存储每个节点的深度。</li>
+<li>dfs传入根节点以及根节点的父亲默认为0 的过程中要做两件事：
+step1：将当前节点的父亲节点更新为传入的父亲；parent[i][0] = father;
+step2：将当前节点的深度更新为dis[father] + 1;
+step3：j从1-logN来更新parent[i][j] = parent[parent[i][j-1]][j-1] 从第2^j-1层的祖宗节点到2^j层需要向上走2^j-1 层 2^j = 2^j-1 + 2^j-1;
+step4: 如果邻接的节点不是自己的father则递归dfs(nxt,cur);以现在的节点作为下一个节点的father，下一个节点为成为下一个节点。
+3.int LCA(int x,int y) 正式开始：
+1.从远到近尝试将层数低的节点x往上移，但同时要保证dis[parent[x][j]]&gt;=dis[y];
+2.此时出现两种情况：如果两个节点x==y直接return x;
+如果不相等两个也已经在同一层，接着同时往上移动，直到两个节点的父亲节点一模一样 return parent[x][0];</li>
+</ol>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;bits/stdc++.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> ll;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> pair<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>,<span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> PII;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> mod <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e9</span><span style="color:#f92672">+</span><span style="color:#ae81ff">7</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> N <span style="color:#f92672">=</span> <span style="color:#ae81ff">5e5</span> <span style="color:#f92672">+</span><span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> MAX_N <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> t,n,q;
+</span></span><span style="display:flex;"><span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>g[N];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> parent[N][MAX_N];<span style="color:#75715e">//锟斤拷录锟斤拷锟斤拷锟斤拷锟斤拷锟饺节碉拷 parent[i][j]锟侥猴拷锟斤拷锟斤拷 锟节碉拷锟斤拷锟斤拷2^j锟斤拷锟侥节碉拷值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> dis[N];<span style="color:#75715e">//锟斤拷锟斤拷锟斤拷锟斤拷
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dfs</span>(<span style="color:#66d9ef">int</span> cur,<span style="color:#66d9ef">int</span> par);<span style="color:#75715e">//锟斤拷锟斤拷锟斤拷锟斤拷每锟斤拷锟节碉拷锟斤拷锟斤拷锟饺ｏ拷锟皆硷拷parent锟斤拷锟斤拷
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">lca</span>(<span style="color:#66d9ef">int</span> x,<span style="color:#66d9ef">int</span> y);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">solve</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> n,q;
+</span></span><span style="display:flex;"><span>  cin <span style="color:#f92672">&gt;&gt;</span> n <span style="color:#f92672">&gt;&gt;</span> q;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;</span>n;<span style="color:#f92672">++</span>i){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> u,v;
+</span></span><span style="display:flex;"><span>    cin <span style="color:#f92672">&gt;&gt;</span> u <span style="color:#f92672">&gt;&gt;</span> v;
+</span></span><span style="display:flex;"><span>    g[u].push_back(v),g[v].push_back(u);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  dfs(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">while</span>(q<span style="color:#f92672">--</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> x,y;
+</span></span><span style="display:flex;"><span>    cin <span style="color:#f92672">&gt;&gt;</span> x <span style="color:#f92672">&gt;&gt;</span> y;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> lca(x,y)<span style="color:#f92672">&lt;&lt;</span>endl;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    cin.tie(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">-&gt;</span> sync_with_stdio(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    cout.tie(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">-&gt;</span> sync_with_stdio(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    solve();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">dfs</span>(<span style="color:#66d9ef">int</span> cur,<span style="color:#66d9ef">int</span> par){
+</span></span><span style="display:flex;"><span>  dis[cur] <span style="color:#f92672">=</span> dis[par] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  parent[cur][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> par;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">20</span>;<span style="color:#f92672">++</span>i){
+</span></span><span style="display:flex;"><span>    parent[cur][i] <span style="color:#f92672">=</span> parent[parent[cur][i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]][i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>];
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">auto</span> nxt : g[cur]){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(nxt<span style="color:#f92672">!=</span>par){
+</span></span><span style="display:flex;"><span>      dfs(nxt,cur);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">lca</span>(<span style="color:#66d9ef">int</span> x,<span style="color:#66d9ef">int</span> y){
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(dis[x]<span style="color:#f92672">&lt;</span>dis[y]) swap(x,y);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>MAX_N<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">0</span>;<span style="color:#f92672">--</span>i){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(dis[parent[x][i]]<span style="color:#f92672">&gt;=</span>dis[y])
+</span></span><span style="display:flex;"><span>      x <span style="color:#f92672">=</span> parent[x][i];
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(x<span style="color:#f92672">==</span>y) <span style="color:#66d9ef">return</span> x;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> j<span style="color:#f92672">=</span>MAX_N<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;j<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">0</span>;<span style="color:#f92672">--</span>j){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(parent[x][j]<span style="color:#f92672">!=</span>parent[y][j])
+</span></span><span style="display:flex;"><span>      x <span style="color:#f92672">=</span> parent[x][j],y<span style="color:#f92672">=</span>parent[y][j];
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> parent[x][<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+    </div>
+  <a href="/post/lca/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+  </div>
+
+        </div>
       
         <div class="relative w-100 w-30-l mb4 bg-white">
             <div class="mb3 pa4 mid-gray overflow-hidden">
