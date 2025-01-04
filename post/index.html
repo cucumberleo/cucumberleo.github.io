@@ -429,7 +429,15 @@ e.g:合并果子 合并n堆果子（每次合并两堆，消耗的体力为两�
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div>
+</span></span></code></pre></div><h3 id="唯一分解定理--约数个数定理--约数和定理--费马小定理求逆元">唯一分解定理 + 约数个数定理 + 约数和定理 + 费马小定理求逆元</h3>
+<pre><code>1. 唯一分解定理： 任取N&gt;1, 则该数字必定能分解成若干prime的乘积：N = p1^a1  * p2^a2 * p3^a3 .... * pn^an;
+2. 约数个数定理： cnt(N) = (1+a1)*(1+a2)...*(1+an);
+3. 约数和定理：   sum(N) = (1+p1+p1^2+...+p1^an) *... *(1+pn+pn^2+...+pn^an); 
+                 对于单个项来说是等比数列求和公式 (pi^(an+1)-1)/(pi-1) 注意这里每一组都是（an+10）项
+4. 结合前面约数和定理 发现每一项都要算 /（pi-1） 其实这等价于乘 （pi-1）的逆元再取模 逆元存在的条件就是：__gcd(pi-1,mod) == 1 两者互质 a*x % mod = 1,则x为a的逆元
+5. 费马小定理求逆元： 1.a^p % mod = a （a是p的倍数） 2. a^(p-1) % mod = 1 -&gt; a*a^(p-2) % mod = 1 所以a^(p-2)为a 模mod下的逆元
+</code></pre>
+<p>需要熟练背诵的基本功：</p>
     </div>
   <a href="/post/number-theory/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
   </div>
@@ -444,7 +452,7 @@ e.g:合并果子 合并n堆果子（每次合并两堆，消耗的体力为两�
     <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
   <div class="flex justify-between">
   <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://cucumberleo.github.io/" >
-    &copy;  Zjh_canAc Tech-Blog 2024 
+    &copy;  Zjh_canAc Tech-Blog 2025 
   </a>
     <div><div class="ananke-socials"><a href="https://www.facebook.com/%25!s%28%3cnil%3e%29" target="_blank" rel="noopener"
         class="ananke-social-link link-transition facebook link dib z-999 pt3 pt0-l mr1"
